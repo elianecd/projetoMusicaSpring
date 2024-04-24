@@ -1,0 +1,9 @@
+spring: #Isso indica o inicio de uma secao de configuracao especifica do Spring Boot.
+  profiles:
+    active: "dev" #vai para o application-dev.yml
+
+logging: #Isso indica o inicio de uma secao de configuracao para logging (registro de eventos) na aplicacao.
+  level:
+    org.springframework.security: TRACE
+#significa que todos os eventos relacionados a seguranca gerados por essa parte do codigo serao registrados com o nivel TRACE de detalhe.
+#O nivel TRACE eh o nivel de log mais detalhado e eh frequentemente usado para depuracao ou diagnostico de problemas especificos.
