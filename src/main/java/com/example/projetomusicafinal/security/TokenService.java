@@ -47,10 +47,8 @@ public class TokenService {
                     .build()
                     .verify(token)
                     .getSubject();
-
         } catch (JWTVerificationException exception) {
-            System.out.println("Usuário não autenticado");
-            throw new UnauthorizedException("Usuário não autenticado");
+            return "";
         }
     }
 

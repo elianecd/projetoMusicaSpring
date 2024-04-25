@@ -1,7 +1,9 @@
 package com.example.projetomusicafinal.controllers;
 
+import com.example.projetomusicafinal.dtos.AlbumResponseDTO;
 import com.example.projetomusicafinal.dtos.BandaDTO;
 import com.example.projetomusicafinal.dtos.BandaResponseDTO;
+import com.example.projetomusicafinal.dtos.MusicaResponseDTO;
 import com.example.projetomusicafinal.models.Album;
 import com.example.projetomusicafinal.models.AvaliacaoBanda;
 import com.example.projetomusicafinal.models.AvaliacaoRequest;
@@ -38,7 +40,6 @@ public class BandaController {
     private AlbumService albumService;
 
     @PostMapping("/novo-registro")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> createBanda(@Valid @RequestBody BandaDTO bandaDTO) {
 
         if (bandaDTO.getNome() == null || bandaDTO.getResumo() == null) {
@@ -78,11 +79,9 @@ public class BandaController {
             String mediaFormatada = String.format(enUS, "%.2f", banda.getMedia());
 
             return new ResponseEntity<>("Banda " + banda.getNome() + " avaliada com sucesso com nota " + nota + ". Média atual: " + mediaFormatada, HttpStatus.CREATED);
-
         } catch (RuntimeException exception) {
             throw new RuntimeException("Não foi possível avaliar a banda", exception);
         }
-
     }
 
     @GetMapping
@@ -107,7 +106,7 @@ public class BandaController {
         Banda banda = bandaService.findById(id);
 
         if (banda == null) {
-            return new ResponseEntity<>("Banda não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Nenhuma banda registrada.", HttpStatus.OK);
         }
 
         Pageable pageableWithTenItems = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
@@ -118,11 +117,32 @@ public class BandaController {
             return new ResponseEntity<>("Nenhum álbum registrado", HttpStatus.OK);
         }
 
-        // Convert the Page<Album> to List<Album>
-        List<Album> albuns = albunsPage.getContent();
+        // Convert the Page<Album> to List<AlbumResponseDTO>
+        List<AlbumResponseDTO> albuns = albunsPage.getContent().stream()
+                .map(album -> {
+                    AlbumResponseDTO albumDTO = new AlbumResponseDTO();
+                    albumDTO.setId(album.getId());
+                    albumDTO.setNome(album.getNome());
+                    albumDTO.setMedia(album.getMedia());
+                    albumDTO.setDuracaoTotal(album.getDuracaoTotal());
+                    if (album.getMusicas().isEmpty()) {
+                        albumDTO.setMensagem("Não há musicas cadastradas");
+                    } else {
+                        albumDTO.setMusicas(album.getMusicas().stream().map(musica -> {
+                            MusicaResponseDTO musicaDTO = new MusicaResponseDTO();
+                            musicaDTO.setId(musica.getId());
+                            musicaDTO.setNome(musica.getNome());
+                            musicaDTO.setResumo(musica.getResumo());
+                            musicaDTO.setMedia(musica.getMedia());
+                            musicaDTO.setDuracao(musica.getDuracao());
+                            return musicaDTO;
+                        }).collect(Collectors.toList()));
+                    }
+                    return albumDTO;
+                })
+                .collect(Collectors.toList());
 
         return new ResponseEntity<>(albuns, HttpStatus.OK);
     }
-
 }
 

@@ -1,7 +1,5 @@
 package com.example.projetomusicafinal.dtos;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,15 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class AlbumDTO {
-    @NotBlank
+public class MusicaResponseDTO {
+    private Long id;
     private String nome;
-
-    @NotBlank
     private String resumo;
-
-    @NotNull
-    private Long bandaId;
+    private Double media;
+    private Integer duracao;
 }
 

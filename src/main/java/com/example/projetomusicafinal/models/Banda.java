@@ -14,7 +14,6 @@ import lombok.Setter;
 @Table(name = "BandaTable")
 
 public class Banda {
-
     @Id //marca o campo id como a chave primária da entidade.
     @GeneratedValue(strategy = GenerationType.IDENTITY) //especifica que o valor do campo id será gerado automaticamente pelo banco de dados usando uma estratégia de auto-incremento.
     private Long id;
@@ -27,5 +26,4 @@ public class Banda {
 
     @Column(name = "media")
     private Double media = 0.0;
-
 }

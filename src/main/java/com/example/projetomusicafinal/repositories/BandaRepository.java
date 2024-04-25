@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BandaRepository extends JpaRepository<Banda, Long> {
-
     Page<Banda> findAll(Pageable pageable);
-
+    Banda findByNome(String nome);
 }

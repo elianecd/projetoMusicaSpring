@@ -1,5 +1,9 @@
 package com.example.projetomusicafinal.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,17 +16,19 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "MusicaTable")
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Musica {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne //muitas músicas podem estar associados a uma única banda.
     @JoinColumn(name = "banda_id", nullable = false)
     private Banda banda;
 
+    @JsonIgnore
     @ManyToOne //muitas músicas podem estar associados a um unico album.
     @JoinColumn(name = "album_id", nullable = false)
     private Album album;
@@ -38,5 +44,4 @@ public class Musica {
 
     @Column(name = "duracao")
     private int duracao = 0; //em segundos
-
 }

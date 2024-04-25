@@ -1,5 +1,6 @@
 package com.example.projetomusicafinal.services;
 
+import com.example.projetomusicafinal.exceptions.AlbumAlreadyExistsException;
 import com.example.projetomusicafinal.models.Album;
 import com.example.projetomusicafinal.models.AvaliacaoAlbum;
 import com.example.projetomusicafinal.models.Banda;
@@ -22,6 +23,10 @@ public class AlbumService {
     private AlbumRepository albumRepository;
 
     public Album createAlbum(Album album) {
+        Album existingAlbum = albumRepository.findByNomeAndBanda(album.getNome(), album.getBanda());
+        if (existingAlbum != null) {
+            throw new AlbumAlreadyExistsException("Um álbum com o nome " + album.getNome() + " já existe para esta banda.");
+        }
         return albumRepository.save(album);
     }
 
