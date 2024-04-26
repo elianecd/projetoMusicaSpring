@@ -24,13 +24,14 @@ import java.io.IOException;
 @Setter
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
-    private final HandlerExceptionResolver handlerExceptionResolver;
+
+    private HandlerExceptionResolver handlerExceptionResolver;
 
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public SecurityFilter(HandlerExceptionResolver handlerExceptionResolver) {
@@ -65,5 +66,4 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (authHeader == null) return null;
         return authHeader.replace("Bearer ", "");
     }
-
 }

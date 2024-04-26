@@ -19,8 +19,6 @@ import org.slf4j.LoggerFactory;
 public class GlobalExceptionHandler{
     private final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @Autowired
-    private BandaService bandaService;
 
     @ExceptionHandler(RuntimeException.class)
     public ProblemDetail handleSecurityException(RuntimeException ex) {

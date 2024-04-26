@@ -20,11 +20,6 @@ public class TokenService {
     private String secret;
 
     public String generateToken(Usuario user) {
-
-//        if (user.getUsername() == null) {
-//            throw new RuntimeException("Username is null");
-//        }
-
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()

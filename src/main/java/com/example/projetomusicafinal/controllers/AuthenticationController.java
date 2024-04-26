@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("usuarios")
+@RequestMapping("/usuarios")
 
 public class AuthenticationController {
 
@@ -53,6 +53,5 @@ public class AuthenticationController {
 
         return ResponseEntity.ok().build();
     }
-
 }
 
