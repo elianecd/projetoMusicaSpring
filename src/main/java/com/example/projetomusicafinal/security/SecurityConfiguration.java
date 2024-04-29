@@ -50,9 +50,9 @@ public class SecurityConfiguration {
         return authenticationConfiguration.getAuthenticationManager(); //só para pegar a instancia do authenticationManager do proprio spring security
     }
 
-    @Bean
+    @Bean //para que faça a injeçao correta desse metodo, para que seja utilizado no momento q a gente precisa
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); //tbm chamando do proprio spring security
     }
 
 }
