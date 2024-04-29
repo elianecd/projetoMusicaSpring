@@ -53,7 +53,7 @@ public class SecurityFilter extends OncePerRequestFilter {
                     throw new AccessDeniedException("Erro ao autenticar.");
                 }
             }
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response); //to chamando o proximo filtro q eh o usernamePasswordAuthenticationFilter
         }
         catch (AccessDeniedException ex) {
             handlerExceptionResolver.resolveException(request, response, null, ex);
