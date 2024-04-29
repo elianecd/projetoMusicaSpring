@@ -11,11 +11,10 @@ import org.springframework.stereotype.Service;
 public class AuthorizationService implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    UserRepository userRepository; //instancia do meu repository para consultar o meu banco de dados
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
-    }
-
+    } //aqui fazemos a consulta dos nossos usuarios para o spring security
 }
