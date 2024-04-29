@@ -30,16 +30,18 @@ public class SecurityConfiguration {
 
 
     @Bean //para q consiga instanciar a classe
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception { //esse metodo recebe uma requisicao http e retorna um objeto secutiryFilterChain q eh gerenciado pelo proprio spring
+    //Quando a aplicação é iniciada, o Spring Security procura por beans do tipo SecurityFilterChain para determinar como configurar a segurança. Sua execução ocorre antes de verificar senhas, usernames ou tokens.
+    //este método configura as políticas de segurança que a aplicação seguirá ao lidar com as requisições HTTP. 
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //no statefull armazena as informaçoes da sessao so usuario (o servidor armazena as sessoes q estao ativas) e no stateless só fazemos autenticacao via token depois de validar usuario e senha
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios/novo-registro").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class) //aqui eh adicionado o filtro de seguranca antes do filtro padrao (usernamePasswordAuthenticationFilter)
                 .build();
     }
 
