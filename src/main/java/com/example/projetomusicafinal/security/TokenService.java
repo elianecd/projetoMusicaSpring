@@ -48,7 +48,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject(); //pegando o usuario
         } catch (JWTVerificationException exception) {
-            return "";
+            return ""; //vai retornar uma string vazia pq o metodo que receber uma string vazia como usuario ja vai perceber q não tem usuario e vai retornar unauthorized
         }
     }
 
