@@ -43,10 +43,10 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("auth-api")
+                    .withIssuer("auth-api") //quem foi o emissor
                     .build()
                     .verify(token)
-                    .getSubject();
+                    .getSubject(); //pegando o usuario
         } catch (JWTVerificationException exception) {
             return "";
         }
