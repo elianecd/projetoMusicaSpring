@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class AuthenticationController {
 
-    @Autowired
+    @Autowired //chamando do securityConfiguration
     private AuthenticationManager authenticationManager;
 
     @Autowired
