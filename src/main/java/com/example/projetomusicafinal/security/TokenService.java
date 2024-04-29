@@ -29,7 +29,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                     .withIssuer("auth-api")
-                    .withSubject(user.getUsername())
+                    .withSubject(user.getUsername()) //o usuario q esta recebendo esse token
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
             return token;
