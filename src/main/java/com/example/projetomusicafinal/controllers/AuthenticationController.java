@@ -41,6 +41,7 @@ public class AuthenticationController {
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
+    
     @PostMapping("/novo-registro")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
 
@@ -53,6 +54,5 @@ public class AuthenticationController {
 
         return ResponseEntity.ok().build();
     }
-
 }
 
