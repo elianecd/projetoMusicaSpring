@@ -66,7 +66,7 @@ public class BandaController {
         try {
             Banda banda = bandaService.findById(idBanda);
             if (banda == null) {
-                return new ResponseEntity<>("Banda não encontrada", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Banda não encontrada", HttpStatus.BAD_REQUEST);
             }
 
             AvaliacaoBanda avaliacaoBanda = new AvaliacaoBanda();
